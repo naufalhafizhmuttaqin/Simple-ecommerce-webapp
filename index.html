@@ -22,15 +22,17 @@
 
   <!-- KANAN: ACTIONS -->
 <div class="top-right">
-  <button class="action-btn" title="Wishlist" data-link="wishlist.html">
+  <a href="wishlist.html" class="action-btn" title="Wishlist">
     ❤️
-  </button>
-  <button class="action-btn cart-btn" title="Keranjang" data-link="cart.html">
+  </a>
+
+  <a href="cart.html" class="action-btn cart-btn" title="Keranjang">
     🛒
-  </button>
-  <button class="action-btn" title="Akun" data-link="account.html">
+  </a>
+
+  <a href="account.html" class="action-btn" title="Akun">
     👤
-  </button>
+  </a>
 </div>
 </header>
 
@@ -202,16 +204,6 @@
   </footer>
 
   <script src="script.js"></script>
-  <script>
-  document.querySelectorAll('.action-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const link = btn.dataset.link;
-      if (link) {
-        window.location.href = link;
-      }
-    });
-  });
-</script>
 </body>
 
 </body>
