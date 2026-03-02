@@ -158,3 +158,14 @@ filterButtons.forEach(btn => {
   });
 });
 
+/* ================= HEADER NAVIGATION ================= */
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".action-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const link = this.dataset.link;
+      if (link) {
+        window.location.href = link;
+      }
+    });
+  });
+});
