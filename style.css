@@ -79,12 +79,19 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  border: none;
+
+  /* RESET LINK STYLE */
+  text-decoration: none;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(6px);
   font-size: 20px;
   cursor: pointer;
-  color: #0F172A;
+
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
@@ -100,9 +107,14 @@ body {
     0 0 0 3px rgba(15, 23, 42, 0.08);
 }
 
-/* Active / Click */
+.action-btn:focus,
 .action-btn:active {
-  transform: translateY(-1px) scale(0.98);
+  outline: none;
+  text-decoration: none;
+}
+
+.action-btn:visited {
+  color: #0F172A;
 }
 
 /* ===== CART BADGE ===== */
