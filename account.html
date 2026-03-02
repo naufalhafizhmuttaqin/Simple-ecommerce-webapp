@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akun - TOKOku</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="acc.css">
+</head>
+<body>
+
+  <div class="bg-blur one"></div>
+  <div class="bg-blur two"></div>
+
+<header class="top-bar">
+  <div class="top-left">
+    <div class="brand" onclick="location.href='index.html'">
+      TOKO<span>ku</span>
+    </div>
+  </div>
+  <div class="top-right">
+  <button class="action-btn" title="Wishlist" data-link="wishlist.html">
+    ❤️
+  </button>
+  <button class="action-btn cart-btn" title="Keranjang" data-link="cart.html">
+    🛒
+  </button>
+  <button class="action-btn" title="Akun" data-link="account.html">
+    👤
+  </button>
+</div>
+</header>
+
+<div class="page-wrapper">
+
+<!-- Login -->
+<div id="loginSection" class="auth-container hidden">
+  <div class="auth-card">
+    <h2>Halo 👋</h2>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <div class="password-wrapper">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <span class="toggle-password" onclick="togglePassword('loginPassword', this)">👁</span>
+    </div>
+    <div class="form-message" id="loginMessage"></div>
+    <button onclick="login()">Login</button>
+    <div class="switch-auth">
+      Belum punya akun? <span onclick="showSignup()">Sign Up</span>
+    </div>
+  </div>
+</div>
+
+<!-- SIGN UP -->
+<div id="signupSection" class="auth-container hidden">
+  <div class="auth-card">
+    <h2>Buat Akun Baru ✨</h2>
+    <input type="text" id="signupName" placeholder="Nama Lengkap">
+    <input type="email" id="signupEmail" placeholder="Email">
+    <div class="password-wrapper">
+      <input type="password" id="signupPassword" placeholder="Password">
+      <span class="toggle-password" onclick="togglePassword('signupPassword', this)">👁</span>
+    </div>
+    <div class="form-message" id="signupMessage"></div>
+    <button onclick="signup()">Sign Up</button>
+    <div class="switch-auth">
+      Sudah punya akun? <span onclick="showLogin()">Sign In</span>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT INFO -->
+<div id="accountSection" class="account-container hidden">
+  <div class="account-card">
+
+    <div class="profile-header">
+      <div class="profile-avatar" id="avatarLetter"></div>
+      <div class="profile-info">
+        <h3 id="accName"></h3>
+        <p id="accEmail"></p>
+      </div>
+    </div>
+
+    <div class="account-menu">
+      <div class="menu-item">📦 Pesanan</div>
+      <div class="menu-item">❤️ Wishlist</div>
+      <div class="menu-item">📍 Alamat</div>
+      <div class="menu-item">⚙ Pengaturan</div>
+    </div>
+
+    <button class="btn-primary logout" onclick="logout()">Logout</button>
+
+  </div>
+</div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".action-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const link = this.getAttribute("data-link");
+      if (link) {
+        window.location.href = link;
+      }
+    });
+  });
+});
+</script>
+
+<script>
+const loginSection = document.getElementById("loginSection");
+const signupSection = document.getElementById("signupSection");
+const accountSection = document.getElementById("accountSection");
+
+function checkLogin(){
+  const user = JSON.parse(localStorage.getItem("user"));
+  const loggedIn = localStorage.getItem("loggedIn");
+
+  if(user && loggedIn){
+    showAccount(user);
+  } else {
+    showLogin();
+  }
+}
+
+function showLogin(){
+  loginSection.classList.remove("hidden");
+  signupSection.classList.add("hidden");
+  accountSection.classList.add("hidden");
+}
+
+function showSignup(){
+  signupSection.classList.remove("hidden");
+  loginSection.classList.add("hidden");
+  accountSection.classList.add("hidden");
+}
+
+function signup(){
+  const name = signupName.value;
+  const email = signupEmail.value;
+  const password = signupPassword.value;
+  const messageBox = document.getElementById("signupMessage");
+
+  messageBox.style.display = "block";
+  messageBox.className = "form-message";
+
+  if(!name || !email || !password){
+    messageBox.classList.add("error");
+    messageBox.textContent = "Semua data wajib diisi!";
+    return;
+  }
+
+  if(!isValidPassword(password)){
+    messageBox.classList.add("error");
+    messageBox.textContent = "Password minimal 8 karakter, 1 huruf besar, 1 angka, 1 simbol!";
+    return;
+  }
+
+  const user = {name,email,password};
+  localStorage.setItem("user",JSON.stringify(user));
+
+  messageBox.classList.add("success");
+  messageBox.textContent = "Akun berhasil dibuat! Silakan login.";
+
+  signupName.value = "";
+  signupEmail.value = "";
+  signupPassword.value = "";
+
+  setTimeout(() => {
+    showLogin();
+    messageBox.style.display = "none";
+  }, 1500);
+}
+
+function login(){
+  const email = loginEmail.value;
+  const password = loginPassword.value;
+  const messageBox = document.getElementById("loginMessage");
+
+  messageBox.style.display = "block";
+  messageBox.className = "form-message";
+
+  const savedUser = JSON.parse(localStorage.getItem("user"));
+
+  if(!savedUser || email !== savedUser.email || password !== savedUser.password){
+    messageBox.classList.add("error");
+    messageBox.textContent = "Email atau password salah!";
+    return;
+  }
+
+  localStorage.setItem("loggedIn",true);
+
+  messageBox.classList.add("success");
+  messageBox.textContent = "Login berhasil!";
+
+  setTimeout(() => {
+    showAccount(savedUser);
+    messageBox.style.display = "none";
+  }, 1000);
+}
+
+function isValidPassword(password) {
+  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  return regex.test(password);
+}
+
+function showAccount(user){
+  accName.textContent = user.name;
+  accEmail.textContent = user.email;
+  avatarLetter.textContent = user.name.charAt(0).toUpperCase();
+
+  accountSection.classList.remove("hidden");
+  loginSection.classList.add("hidden");
+  signupSection.classList.add("hidden");
+}
+
+function logout(){
+  localStorage.removeItem("loggedIn");
+  showLogin();
+}
+
+checkLogin();
+</script>
+
+<script>
+  function togglePassword(inputId, icon){
+  const input = document.getElementById(inputId);
+
+  if(input.type === "password"){
+    input.type = "text";
+    icon.textContent = "🙈";
+  } else {
+    input.type = "password";
+    icon.textContent = "👁";
+  }
+}
+</script>
+
+</body>
+</html>

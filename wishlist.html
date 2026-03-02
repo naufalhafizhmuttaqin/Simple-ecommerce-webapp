@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Wishlist | TOKOku</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top-bar">
+  <div class="top-left">
+    <div class="brand" onclick="location.href='index.html'">
+      TOKO<span>ku</span>
+    </div>
+  </div>
+  <div class="top-right">
+  <button class="action-btn" title="Wishlist" data-link="wishlist.html">
+    ❤️
+  </button>
+  <button class="action-btn cart-btn" title="Keranjang" data-link="cart.html">
+    🛒
+  </button>
+  <button class="action-btn" title="Akun" data-link="account.html">
+    👤
+  </button>
+</div>
+</header>
+
+<main class="page-container">
+  <h1 class="page-title">Wishlist</h1>
+  <div class="item-list"></div>
+</main>
+
+<script>
+function getStorage(key) {
+  return JSON.parse(localStorage.getItem(key)) || [];
+}
+
+function setStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderWishlist();
+});
+
+function renderWishlist() {
+  const listContainer = document.querySelector(".item-list");
+  let wishlist = getStorage("wishlist");
+
+  listContainer.innerHTML = "";
+
+  if (wishlist.length === 0) {
+    listContainer.innerHTML = `
+      <div class="empty-state">
+        <h3>Wishlist kosong</h3>
+        <p>Tambahkan produk ke wishlist ❤️</p>
+      </div>
+    `;
+    return;
+  }
+
+  wishlist.forEach(item => {
+    listContainer.innerHTML += `
+      <div class="item-card">
+        <img src="${item.image}">
+        <div class="item-info">
+          <h4>${item.name}</h4>
+          <p>${item.desc || ""}</p>
+        </div>
+        <div class="item-action">
+          <button onclick="moveToCart('${item.id}')">Masuk keranjang</button>
+          <button class="remove" onclick="removeWishlist('${item.id}')">Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function removeWishlist(id) {
+  let wishlist = getStorage("wishlist");
+  wishlist = wishlist.filter(item => item.id !== id);
+  setStorage("wishlist", wishlist);
+  renderWishlist();
+}
+
+function moveToCart(id) {
+  let wishlist = getStorage("wishlist");
+  let cart = getStorage("cart");
+
+  const item = wishlist.find(i => i.id === id);
+  if (!item) return;
+
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+
+  wishlist = wishlist.filter(i => i.id !== id);
+
+  setStorage("cart", cart);
+  setStorage("wishlist", wishlist);
+
+  renderWishlist();
+}
+</script>
+
+</body>
+</html>

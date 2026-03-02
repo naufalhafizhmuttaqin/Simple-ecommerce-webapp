@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Produk | TOKOku</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-left">
+    <div class="brand" onclick="location.href='index.html'">
+      TOKO<span>ku</span>
+    </div>
+  </div>
+
+  <div class="top-right">
+    <button class="action-btn" title="Wishlist" data-link="wishlist.html">
+      ❤️
+    </button>
+    <button class="action-btn" title="Keranjang" data-link="cart.html">
+      🛒
+    </button>
+    <button class="action-btn" title="Akun" data-link="account.html">
+      👤
+    </button>
+  </div>
+</header>
+
+  <!-- TOP LOADING BAR -->
+<div id="topLoader"></div>
+
+<!-- SKELETON LOADING -->
+<section id="detailSkeleton" class="detail-skeleton">
+  <div class="skeleton-container">
+    <div>
+      <div class="skeleton skeleton-title"></div>
+      <div class="skeleton skeleton-text"></div>
+      <div class="skeleton skeleton-text short"></div>
+    </div>
+    <div class="skeleton skeleton-image"></div>
+  </div>
+</section>
+
+<!-- DETAIL PRODUK -->
+<section id="detailContent" class="detail hidden">
+
+  <div class="detail-container">
+
+    <!-- KIRI: DESKRIPSI -->
+    <div class="detail-info">
+      <h1 id="productName"></h1>
+      <p id="productDesc"></p>
+    </div>
+
+    <!-- KANAN: CARD PRODUK -->
+    <div class="detail-card">
+      <div class="card">
+        <img id="productImage" alt="">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PINDAH KE SINI -->
+  <div class="detail-actions">
+    <button id="addToCart" class="btn-outline">
+      🛒 Tambah ke Keranjang
+    </button>
+
+    <button id="addToWishlist" class="btn-outline">
+      ❤️ Wishlist
+    </button>
+  </div>
+
+  <div class="detail-back">
+    <a href="index.html" class="btn">← Kembali ke Produk</a>
+  </div>
+
+</section>
+
+  <script src="product.js"></script>
+</body>
+</html>

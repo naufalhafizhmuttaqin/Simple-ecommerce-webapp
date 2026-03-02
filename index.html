@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Jualan</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="bg-blur one"></div>
+  <div class="bg-blur two"></div>
+
+<!-- Utility Header -->
+<header class="top-bar">
+  <!-- KIRI: BRAND -->
+  <div class="top-left">
+    <div class="brand">
+      TOKO<span>ku</span>
+    </div>
+  </div>
+
+  <!-- KANAN: ACTIONS -->
+<div class="top-right">
+  <button class="action-btn" title="Wishlist" data-link="wishlist.html">
+    ❤️
+  </button>
+  <button class="action-btn cart-btn" title="Keranjang" data-link="cart.html">
+    🛒
+  </button>
+  <button class="action-btn" title="Akun" data-link="account.html">
+    👤
+  </button>
+</div>
+</header>
+
+  <!-- Hero -->
+  <section class="hero reveal">
+    <p class="typewriter">
+  <span id="type-text"></span><span class="cursor">|</span>
+    </p>
+    <h1>TOKOku menyediakan</h1>
+
+    <!-- kasih jarak ke button -->
+    <p class="hero-desc">
+      Makanan, pakaian, dan perlengkapan rumah dalam satu toko
+    </p>
+
+    <a 
+    href="https://wa.me/6281234567890?text=Halo%20saya%20ingin%20pesan%20produk"
+    target="_blank"
+    class="btn"
+    >
+    Pesan Sekarang
+    </a>
+  </section>
+
+  <!-- SEARCH & FILTER -->
+<section class="section search-filter">
+  <div class="filter-container">
+
+    <!-- SEARCH -->
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Cari produk..."
+      autocomplete="off"
+    />
+
+    <!-- FILTER BUTTONS -->
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">Semua</button>
+      <button class="filter-btn" data-filter="bumbu">Bumbu</button>
+      <button class="filter-btn" data-filter="makanan">Makanan</button>
+      <button class="filter-btn" data-filter="kue">Kue</button>
+      <button class="filter-btn" data-filter="pakaian">Pakaian</button>
+      <button class="filter-btn" data-filter="rumah">Rumah</button>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ================= BUMBU ================= -->
+<section id="bumbu" class="section product-section">
+  <h2>Bumbu Dapur</h2>
+  <div class="grid">
+    <div class="card" data-category="bumbu" onclick="goDetail('bumbu-ayam')">
+      <img src="img/ayam.png" />
+      <p>Bumbu Ayam Ungkep</p>
+    </div>
+    <div class="card" data-category="bumbu" onclick="goDetail('bumbu-rendang')">
+      <img src="img/rendang.png" />
+      <p>Bumbu Rendang</p>
+    </div>
+    <div class="card" data-category="bumbu" onclick="goDetail('bumbu-rawon')">
+      <img src="img/rawon.png" />
+      <p>Bumbu Rawon</p>
+    </div>
+    <div class="card" data-category="bumbu" onclick="goDetail('bumbu-soto')">
+      <img src="img/soto.png" />
+      <p>Bumbu Soto</p>
+    </div>
+  </div>
+</section>
+
+  <!-- ================= MAKANAN ================= -->
+<section id="makanan" class="section alt product-section">
+  <h2>Makanan</h2>
+  <div class="grid">
+    <div class="card" data-category="makanan" onclick="goDetail('makanan-dimsum-ayam')">
+      <img src="img/dimsuma.png" />
+      <p>Dimsum Ayam</p>
+    </div>
+    <div class="card" data-category="makanan" onclick="goDetail('makanan-pangsit')">
+      <img src="img/pangsit.png" />
+      <p>Pangsit Kuah</p>
+    </div>
+    <div class="card" data-category="makanan" onclick="goDetail('makanan-dimsum-udang')">
+      <img src="img/dimsumu.png" />
+      <p>Dimsum Udang</p>
+    </div>
+  </div>
+</section>
+
+  <!-- ================= KUE ================= -->
+<section id="kue" class="section product-section">
+  <h2>Kue Nastar</h2>
+  <div class="grid">
+    <div class="card" data-category="kue" onclick="goDetail('kue-nastar-bulat')">
+      <img src="img/nastarb.png" />
+      <p>Nastar Bulat</p>
+    </div>
+    <div class="card" data-category="kue" onclick="goDetail('kue-nastar-gulung')">
+      <img src="img/nastarg.png" />
+      <p>Nastar Gulung</p>
+    </div>
+    <div class="card" data-category="kue" onclick="goDetail('kue-nastar-daun')">
+      <img src="img/nastard.png" />
+      <p>Nastar Daun</p>
+    </div>
+  </div>
+</section>
+
+  <!-- ================= PAKAIAN ================= -->
+<section id="pakaian" class="section alt product-section">
+  <h2>Pakaian</h2>
+  <div class="grid">
+    <div class="card" data-category="pakaian" onclick="goDetail('pakaian-muslim')">
+      <img src="img/bajumuslim.png" />
+      <p>Baju Muslim</p>
+    </div>
+    <div class="card" data-category="pakaian" onclick="goDetail('pakaian-pria')">
+      <img src="img/bajupria.png" />
+      <p>Baju Pria</p>
+    </div>
+    <div class="card" data-category="pakaian" onclick="goDetail('pakaian-wanita')">
+      <img src="img/bajuwanita.png" />
+      <p>Baju Wanita</p>
+    </div>
+    <div class="card" data-category="pakaian" onclick="goDetail('pakaian-daster')">
+      <img src="img/daster.png" />
+      <p>Daster</p>
+    </div>
+  </div>
+</section>
+
+  <!-- ================= RUMAH ================= -->
+<section id="rumah" class="section product-section">
+  <h2>Perlengkapan Rumah</h2>
+  <div class="grid">
+    <div class="card" data-category="rumah" onclick="goDetail('rumah-sprei')">
+      <img src="img/sprei.png" />
+      <p>Sprei</p>
+    </div>
+    <div class="card" data-category="rumah" onclick="goDetail('rumah-selimut')">
+      <img src="img/selimut.png" />
+      <p>Selimut</p>
+    </div>
+    <div class="card" data-category="rumah" onclick="goDetail('rumah-bantalguling')">
+      <img src="img/bantalguling.png" />
+      <p>Bantal & Guling</p>
+    </div>
+    <div class="card" data-category="rumah" onclick="goDetail('rumah-kasur')">
+      <img src="img/kasur.png" />
+      <p>Kasur</p>
+    </div>
+  </div>
+</section>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+<a
+  href="https://wa.me/6281234567890?text=Halo%20saya%20ingin%20bertanya%20tentang%20produk%20TOKOku"
+  class="wa-float"
+  target="_blank"
+  aria-label="Chat WhatsApp"
+><span class="wa-tooltip">Chat Kami</span>
+  <img src="img/wa.png" alt="WhatsApp" />
+</a>
+
+  <footer>
+    <p>© 2026 TOKOku</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  document.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const link = btn.dataset.link;
+      if (link) {
+        window.location.href = link;
+      }
+    });
+  });
+</script>
+</body>
+
+</body>
+</html>

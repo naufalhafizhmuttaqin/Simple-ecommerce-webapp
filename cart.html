@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Keranjang | TOKOku</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="top-left">
+    <div class="brand" onclick="location.href='index.html'">
+      TOKO<span>ku</span>
+    </div>
+  </div>
+  <div class="top-right">
+  <button class="action-btn" title="Wishlist" data-link="wishlist.html">
+    ❤️
+  </button>
+  <button class="action-btn cart-btn" title="Keranjang" data-link="cart.html">
+    🛒
+  </button>
+  <button class="action-btn" title="Akun" data-link="account.html">
+    👤
+  </button>
+</div>
+</header>
+
+<main class="page-container">
+  <h1 class="page-title">Keranjang</h1>
+  <div class="item-list"></div>
+</main>
+
+<script>
+function getStorage(key) {
+  return JSON.parse(localStorage.getItem(key)) || [];
+}
+
+function setStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderCart();
+});
+
+function renderCart() {
+  const listContainer = document.querySelector(".item-list");
+  let cart = getStorage("cart");
+
+  listContainer.innerHTML = "";
+
+  if (cart.length === 0) {
+    listContainer.innerHTML = `
+      <div class="empty-state">
+        <h3>Keranjang kosong</h3>
+        <p>Tambahkan produk ke keranjang 🛒</p>
+      </div>
+    `;
+    return;
+  }
+
+  cart.forEach(item => {
+    listContainer.innerHTML += `
+      <div class="item-card">
+        <img src="${item.image}">
+        <div class="item-info">
+          <h4>${item.name}</h4>
+
+          <div class="qty-control">
+            <button onclick="updateQty('${item.id}', -1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="updateQty('${item.id}', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="item-action">
+          <button class="remove" onclick="removeItem('${item.id}')">Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function updateQty(id, change) {
+  let cart = getStorage("cart");
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  item.qty += change;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(i => i.id !== id);
+  }
+
+  setStorage("cart", cart);
+  renderCart();
+}
+
+function removeItem(id) {
+  let cart = getStorage("cart");
+  cart = cart.filter(item => item.id !== id);
+  setStorage("cart", cart);
+  renderCart();
+}
+</script>
+
+</body>
+</html>
