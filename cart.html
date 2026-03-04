@@ -2,15 +2,14 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Keranjang | TOKOku</title>
+  <title>Wishlist | TOKOKu</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <header class="top-bar">
   <div class="top-left">
     <div class="brand" onclick="location.href='index.html'">
-      TOKO<span>ku</span>
+      TOKO<span>Ku</span>
     </div>
   </div>
   <div class="top-right">
@@ -29,7 +28,7 @@
 </header>
 
 <main class="page-container">
-  <h1 class="page-title">Keranjang</h1>
+  <h1 class="page-title">Wishlist</h1>
   <div class="item-list"></div>
 </main>
 
@@ -43,67 +42,69 @@ function setStorage(key, data) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderCart();
+  renderWishlist();
 });
 
-function renderCart() {
+function renderWishlist() {
   const listContainer = document.querySelector(".item-list");
-  let cart = getStorage("cart");
+  let wishlist = getStorage("wishlist");
 
   listContainer.innerHTML = "";
 
-  if (cart.length === 0) {
+  if (wishlist.length === 0) {
     listContainer.innerHTML = `
       <div class="empty-state">
-        <h3>Keranjang kosong</h3>
-        <p>Tambahkan produk ke keranjang 🛒</p>
+        <h3>Wishlist kosong</h3>
+        <p>Tambahkan produk ke wishlist ❤️</p>
       </div>
     `;
     return;
   }
 
-  cart.forEach(item => {
+  wishlist.forEach(item => {
     listContainer.innerHTML += `
       <div class="item-card">
         <img src="${item.image}">
         <div class="item-info">
           <h4>${item.name}</h4>
-
-          <div class="qty-control">
-            <button onclick="updateQty('${item.id}', -1)">−</button>
-            <span>${item.qty}</span>
-            <button onclick="updateQty('${item.id}', 1)">+</button>
-          </div>
+          <p>${item.desc || ""}</p>
         </div>
-
         <div class="item-action">
-          <button class="remove" onclick="removeItem('${item.id}')">Hapus</button>
+          <button onclick="moveToCart('${item.id}')">Masuk keranjang</button>
+          <button class="remove" onclick="removeWishlist('${item.id}')">Hapus</button>
         </div>
       </div>
     `;
   });
 }
 
-function updateQty(id, change) {
-  let cart = getStorage("cart");
-  const item = cart.find(i => i.id === id);
-  if (!item) return;
-
-  item.qty += change;
-
-  if (item.qty <= 0) {
-    cart = cart.filter(i => i.id !== id);
-  }
-
-  setStorage("cart", cart);
-  renderCart();
+function removeWishlist(id) {
+  let wishlist = getStorage("wishlist");
+  wishlist = wishlist.filter(item => item.id !== id);
+  setStorage("wishlist", wishlist);
+  renderWishlist();
 }
 
-function removeItem(id) {
+function moveToCart(id) {
+  let wishlist = getStorage("wishlist");
   let cart = getStorage("cart");
-  cart = cart.filter(item => item.id !== id);
+
+  const item = wishlist.find(i => i.id === id);
+  if (!item) return;
+
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+
+  wishlist = wishlist.filter(i => i.id !== id);
+
   setStorage("cart", cart);
-  renderCart();
+  setStorage("wishlist", wishlist);
+
+  renderWishlist();
 }
 </script>
 
